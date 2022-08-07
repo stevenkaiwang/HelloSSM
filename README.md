@@ -1,2 +1,2 @@
-# HelloSpring
-Start Spring tour using web vscode.
+# HelloSSM
+Start Spring tour from here.
