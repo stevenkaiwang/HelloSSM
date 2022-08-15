@@ -46,4 +46,47 @@ b>可以在MyBatis的核心配置文件中设置一个全局配置信息mapUnder
     <select id="getEmpAndDeptByEmpId" resultMap="empAndDept">
         select t_emp.*, t_dept.dept_name from t_emp left join t_dept on t_emp.emp_id = t_dept.dept_id where t_emp.emp_id = #{empId}
     </select>
+
+<!--    Emp getEmpAndDeptByEmpIdWithAssociation(@Param("empId") Integer empId);-->
+    <resultMap id="empAndDeptWithAssociation" type="emp">
+        <id column="emp_id" property="empId"></id>
+        <result column="emp_name" property="empName"></result>
+        <result column="age" property="age"></result>
+        <result column="gender" property="gender"></result>
+        <association property="dept" javaType="Dept">
+            <id column="dept_id" property="deptId"></id>
+            <result column="dept_name" property="deptName"></result>
+        </association>
+    </resultMap>
+    <select id="getEmpAndDeptByEmpIdWithAssociation" resultMap="empAndDeptWithAssociation">
+        select t_emp.*, t_dept.dept_name from t_emp left join t_dept on t_emp.emp_id = t_dept.dept_id where t_emp.emp_id = #{empId}
+    </select>
+
+<!--    Emp getEmpAndDeptByStep(@Param("empId") Integer empId);-->
+    <resultMap id="empAndDeptWithStep" type="EMP">
+        <id column="emp_id" property="empId"></id>
+        <result column="emp_name" property="empName"></result>
+        <result column="age" property="age"></result>
+        <result column="gender" property="gender"></result>
+        <association property="dept" javaType="Dept"
+                     select="com.atguigu.mybatis.mappers.DeptMapper.getDeptByDeptId"
+                     column="dept_id">
+        </association>
+    </resultMap>
+    <select id="getEmpAndDeptByStep" resultMap="empAndDeptWithStep">
+        select * from t_emp where emp_id = #{empId}
+    </select>
+
+<!--    Emp getEmpsOfDept(@Param("deptId") Integer deptId);-->
+    <select id="getEmpsOfDept" resultType="Emp">
+        select * from t_emp where dept_id = ${deptId}
+    </select>
+
+<!--    List<Emp> getEmpsByCondition(Map<String,Object> conditions);-->
+<select id="getEmpsByCondition" resultType="Emp">
+    select * from t_emp where 1 = 1
+    <if test="empNmae != '' and empName != null" > and emp_name = #{empName}</if>
+    <if test="gender != '' and gender != null" > and gender = #{gender}</if>
+</select>
+
 </mapper>

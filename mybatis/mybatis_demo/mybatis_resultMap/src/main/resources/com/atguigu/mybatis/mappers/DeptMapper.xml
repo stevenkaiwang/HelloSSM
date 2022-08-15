@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.mybatis.mappers.DeptMapper">
+
+<!--    Dept getDeptByDeptId(@Param("deptId") Integer deptId);-->
+    <select id="getDeptByDeptId" resultType="Dept">
+        select * from t_dept where dept_id = #{deptId}
+    </select>
+
+<!--    Dept getDeptEmpByDid(@Param("deptId") Integer deptId);-->
+    <resultMap id="empsOfDept" type="Dept">
+        <id column="dept_id" property="deptId"></id>
+        <result column="dept_name" property="deptName"></result>
+        <collection property="emps" ofType="Emp">
+            <id column="emp_id" property="empId"></id>
+            <result column="emp_name" property="empName"></result>
+            <result column="age" property="age"></result>
+            <result column="gender" property="gender"></result>
+            <result column="email" property="email"></result>
+        </collection>
+    </resultMap>
+    <select id="getDeptEmpByDid" resultMap="empsOfDept">
+        select t_dept.*, t_emp.* from t_dept left join t_emp on t_dept.dept_id = t_emp.dept_id where t_dept.dept_id = ${deptId}
+    </select>
+
+<!--    Dept getDetpByStep(@Param("deptId") Integer deptId);-->
+    <resultMap id="empsOfDeptByStep" type="Dept">
+        <id column="dept_id" property="deptId"></id>
+        <result column="dept_name" property="deptName"></result>
+        <collection property="emps" ofType="Emp" select="com.atguigu.mybatis.mappers.EmpMapper.getEmpsOfDept" column="dept_id"></collection>
+    </resultMap>
+    <select id="getDetpByStep" resultMap="empsOfDeptByStep">
+        select * from t_dept where dept_id = ${deptId}
+    </select>
+
+
+</mapper>
