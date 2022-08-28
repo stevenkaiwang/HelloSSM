@@ -17,6 +17,12 @@ public class Emp {
         this.gender = gender;
     }
 
+    public Emp(String empName, Integer age, String gender) {
+        this.empName = empName;
+        this.age = age;
+        this.gender = gender;
+    }
+
     public Integer getEmpId() {
         return empId;
     }

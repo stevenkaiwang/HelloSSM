@@ -11,7 +11,7 @@ plugins?,environments?,databaseIdProvider?,mappers?
 -->
     <!--引入properties文件-->
     <properties resource="jdbc.properties"/>
-    
+
     <settings>
         <setting name="mapUnderscoreToCamelCase" value="true"/>
         <setting name="lazyLoadingEnabled" value="true"/>
@@ -33,6 +33,10 @@ plugins?,environments?,databaseIdProvider?,mappers?
         <package name="com.atguigu.mybatis.pojo"/>
     </typeAliases>
 
+    <plugins>
+        <!--设置分页插件-->
+        <plugin interceptor="com.github.pagehelper.PageInterceptor"></plugin>
+    </plugins>
     <!--设置连接数据库的环境-->
     <environments default="development">
         <environment id="development">
