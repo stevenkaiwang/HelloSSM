@@ -11,7 +11,7 @@ public class TestAspect {
     public void testAspect() {
         ApplicationContext ac = new ClassPathXmlApplicationContext("applicationContextAOP.xml");
         Calculator calculator = ac.getBean(Calculator.class);
-        int result = calculator.add(1, 1);
+        int result = calculator.sub(1,1);
         System.out.println(result);
     }
 
