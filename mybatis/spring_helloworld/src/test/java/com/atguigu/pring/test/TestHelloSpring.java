@@ -17,12 +17,14 @@ public class TestHelloSpring {
     @Test
     public void testIOC(){
         ClassPathXmlApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext.xml");
-//        Student studentOne = (Student) ac.getBean("StudentOne");
-//        Student studentOne = ac.getBean("StudentOne", Student.class);
-        Person studentOne = ac.getBean(Person.class);
-        System.out.println(studentOne);
-        System.out.println(studentOne instanceof Person);
+//        Student studentOne = (Student) ac.getBean("studentOne");
+//        Student studentOne = ac.getBean("studentOne", Student.class);
+        Student studentTwo = ac.getBean("studentTwo", Student.class);
+//        Person studentOne = ac.getBean(Person.class);
 
+        System.out.println(studentTwo);
+        System.out.println(studentTwo instanceof Person);
+        System.out.println(studentTwo.getGender() == null);
 
     }
 }
