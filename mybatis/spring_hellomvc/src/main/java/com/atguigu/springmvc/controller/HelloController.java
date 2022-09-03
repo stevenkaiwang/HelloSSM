@@ -1,7 +1,8 @@
 package com.atguigu.springmvc.controller;
 
+import com.atguigu.springmvc.pojo.User;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class HelloController {
@@ -18,4 +19,41 @@ public class HelloController {
         return "success";
     }
 
+    @GetMapping(
+            value = {"/test", "/samecontrollertest"},
+            params = {"username", "password=123"},
+            headers = {"Referer=http://localhost:8080/spring_hellomvc/"}
+    )
+    public String testRequestMappingValue(){
+        return "success";
+    }
+    @RequestMapping("/testGetPathParam/{id}/{name}")
+    public String testGetPathParam(@PathVariable("id") Integer id, @PathVariable("name") String name) {
+        System.out.println("id = " + id + " name = " + name);
+        return "success";
+    }
+
+    @RequestMapping("/testGetParam")
+    public String testGetParam(String name, String pwd) {
+        System.out.println("name = " +  name + " pwd = " + pwd);
+        return "success";
+    }
+
+    @RequestMapping("/testGetParam2")
+    public String testGetParam2(@RequestParam(value = "name") String username,
+                                @RequestParam(value = "pwd",required = true, defaultValue = "password") String password,
+                                @RequestHeader(value = "Referer") String referer,
+                                @CookieValue(value = "JSESSIONID") String sessionId
+    ) {
+        System.out.println("username = " +  username + " password = " + password);
+        System.out.println("Referer = " + referer);
+        System.out.println("SESSIONID = " + sessionId);
+        return "success";
+    }
+
+    @RequestMapping("/testpojo")
+    public String testpojo(User user){
+        System.out.println(user);
+        return "success";
+    }
 }
